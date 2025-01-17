@@ -32,29 +32,40 @@
 <button onclick="decodeText()">Decode</button>
 
 <script>
-    function encodeText() {
-        var str = document.getElementById('textInput').value;
+    // Encoding function: UTF-8 to Base64
+    function utf8_to_b64(str) {
         try {
-            var encodedStr = btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {
+            return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {
                 return String.fromCharCode(parseInt(p1, 16));
             }));
-            document.getElementById('textInput').value = encodedStr;  // Display encoded text
         } catch (err) {
-            alert("Error encoding text.");
+            return '';
         }
     }
 
-    function decodeText() {
-        var str = document.getElementById('textInput').value;
+    // Decoding function: Base64 to UTF-8
+    function b64_to_utf8(str) {
         try {
-            // Use the decode function you provided
-            var decodedStr = decodeURIComponent(Array.prototype.map.call(atob(str), function(c) {
+            return decodeURIComponent(Array.prototype.map.call(atob(str), function(c) {
                 return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
             }).join(''));
-            document.getElementById('textInput').value = decodedStr;  // Display decoded text
         } catch (err) {
-            alert("Error decoding text.");
+            return '';
         }
+    }
+
+    // Function to encode text
+    function encodeText() {
+        var str = document.getElementById('textInput').value;
+        var encodedStr = utf8_to_b64(str); // Use utf8_to_b64 function
+        document.getElementById('textInput').value = encodedStr; // Display encoded text
+    }
+
+    // Function to decode text
+    function decodeText() {
+        var str = document.getElementById('textInput').value;
+        var decodedStr = b64_to_utf8(str); // Use b64_to_utf8 function
+        document.getElementById('textInput').value = decodedStr; // Display decoded text
     }
 </script>
 
