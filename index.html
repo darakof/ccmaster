@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Encoder/Decoder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Text Encoder/Decoder</h1>
+<input type="text" id="textInput" placeholder="Enter text here">
+<br>
+<button onclick="encodeText()">Encode</button>
+<button onclick="decodeText()">Decode</button>
+
+<script>
+    function encodeText() {
+        var str = document.getElementById('textInput').value;
+        try {
+            var encodedStr = btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {
+                return String.fromCharCode(parseInt(p1, 16));
+            }));
+            document.getElementById('textInput').value = encodedStr;  // Display encoded text
+        } catch (err) {
+            alert("Error encoding text.");
+        }
+    }
+
+    function decodeText() {
+        var str = document.getElementById('textInput').value;
+        try {
+            var decodedStr = decodeURIComponent(atob(str).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+            document.getElementById('textInput').value = decodedStr;  // Display decoded text
+        } catch (err) {
+            alert("Error decoding text.");
+        }
+    }
+</script>
+
+</body>
+</html>
