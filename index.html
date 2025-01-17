@@ -47,7 +47,8 @@
     function decodeText() {
         var str = document.getElementById('textInput').value;
         try {
-            var decodedStr = decodeURIComponent(atob(str).split('').map(function(c) {
+            // Use the decode function you provided
+            var decodedStr = decodeURIComponent(Array.prototype.map.call(atob(str), function(c) {
                 return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
             }).join(''));
             document.getElementById('textInput').value = decodedStr;  // Display decoded text
