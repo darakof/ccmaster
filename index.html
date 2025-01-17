@@ -58,11 +58,17 @@
     // Decoding function: Base64 to UTF-8
     function b64_to_utf8(str) {
         try {
+            // Check if the string is a valid base64 string
+            if (!/^([A-Za-z0-9+/=]*)$/.test(str)) {
+                throw new Error('Invalid Base64 string');
+            }
+            
+            // Decode base64 to UTF-8
             return decodeURIComponent(Array.prototype.map.call(atob(str), function(c) {
                 return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
             }).join(''));
         } catch (err) {
-            return '';
+            return 'Invalid Base64 string or decoding error.';
         }
     }
 
