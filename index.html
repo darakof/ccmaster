@@ -10,10 +10,12 @@
             text-align: center;
             margin-top: 50px;
         }
-        input {
+        input, textarea {
             width: 80%;
             padding: 10px;
             margin: 10px;
+            font-size: 16px;
+            box-sizing: border-box;
         }
         button {
             padding: 10px 20px;
@@ -21,15 +23,25 @@
             cursor: pointer;
             margin: 10px;
         }
+        textarea {
+            height: 150px;
+        }
     </style>
 </head>
 <body>
 
 <h1>Text Encoder/Decoder</h1>
+
+<!-- Input Box -->
 <input type="text" id="textInput" placeholder="Enter text here">
 <br>
+
+<!-- Buttons to Encode and Decode -->
 <button onclick="encodeText()">Encode</button>
 <button onclick="decodeText()">Decode</button>
+
+<!-- Output Box -->
+<textarea id="outputBox" readonly placeholder="Encoded/Decoded text will appear here"></textarea>
 
 <script>
     // Encoding function: UTF-8 to Base64
@@ -58,14 +70,14 @@
     function encodeText() {
         var str = document.getElementById('textInput').value;
         var encodedStr = utf8_to_b64(str); // Use utf8_to_b64 function
-        document.getElementById('textInput').value = encodedStr; // Display encoded text
+        document.getElementById('outputBox').value = encodedStr; // Display encoded text in output box
     }
 
     // Function to decode text
     function decodeText() {
         var str = document.getElementById('textInput').value;
         var decodedStr = b64_to_utf8(str); // Use b64_to_utf8 function
-        document.getElementById('textInput').value = decodedStr; // Display decoded text
+        document.getElementById('outputBox').value = decodedStr; // Display decoded text in output box
     }
 </script>
 
